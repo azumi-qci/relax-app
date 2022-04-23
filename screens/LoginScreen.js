@@ -5,7 +5,6 @@ import { Card, Input, Button, Text } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 import api from '../helpers/api';
-import { TextInput } from 'react-native-gesture-handler';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
