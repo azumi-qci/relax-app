@@ -12,7 +12,9 @@ import backgroundImage from '../assets/test.jpg';
 const ActivityCard = ({ name }) => {
   const navigation = useNavigation();
 
-  const handlePressCard = useCallback(() => {}, []);
+  const handlePressCard = useCallback(() => {
+    navigation.navigate('Review', { name });
+  }, []);
 
   return (
     <Pressable onPress={handlePressCard}>

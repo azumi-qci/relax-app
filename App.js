@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import ReviewScreen from './screens/ReviewScreeen';
 
 import store from './redux/store';
 
@@ -31,6 +32,11 @@ export default function App() {
             name='Signup'
             component={SignupScreen}
             options={{ title: 'Crear cuenta' }}
+          />
+          <Stack.Screen
+            name='Review'
+            component={ReviewScreen}
+            options={{ title: 'Evaluar actividad' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
