@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createRef, useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { View, StyleSheet, ToastAndroid } from 'react-native';
 import { Card, Input, Button, Text } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +19,7 @@ const LoginScreen = () => {
   });
   const [sending, setSending] = useState(false);
 
-  const passwordInputRef = createRef(null);
+  const passwordInputRef = useRef(null);
 
   const handlePressNoAccount = useCallback(() => {
     navigation.navigate('Signup');
@@ -67,6 +67,12 @@ const LoginScreen = () => {
     return !data.email || !data.password;
   }, [data]);
 
+  const goToPasswordInput = useCallback(() => {
+    if (passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <Card containerStyle={styles.card}>
@@ -75,14 +81,18 @@ const LoginScreen = () => {
         <Input
           disabled={sending}
           onChangeText={(value) => setData({ ...data, email: value })}
+          onSubmitEditing={goToPasswordInput}
           placeholder='Correo electrónico'
+          returnKeyType='next'
           value={data.email}
         />
         <Input
-          ref={passwordInputRef}
           disabled={sending}
           onChangeText={(value) => setData({ ...data, password: value })}
+          onSubmitEditing={handlePressEnter}
           placeholder='Contraseña'
+          ref={passwordInputRef}
+          returnKeyType='done'
           secureTextEntry={true}
           value={data.password}
         />
