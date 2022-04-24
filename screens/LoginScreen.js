@@ -32,6 +32,7 @@ const LoginScreen = () => {
         await AsyncStorage.setItem('auth_token', token);
         // Redirect to home screen
         navigation.navigate('Home');
+        // TODO: Save 'displayName' and email in context. I don't want to fight with redux at this time
       })
       .catch((error) => {
         if (!error.response) {
