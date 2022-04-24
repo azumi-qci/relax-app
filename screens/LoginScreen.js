@@ -3,11 +3,15 @@ import { createRef, useCallback, useState } from 'react';
 import { View, StyleSheet, ToastAndroid } from 'react-native';
 import { Card, Input, Button, Text } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+
+import { login } from '../redux/features/auth.slice';
 
 import api from '../helpers/api';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [data, setData] = useState({
     email: '',
@@ -27,12 +31,13 @@ const LoginScreen = () => {
     api
       .post('/auth/login', { ...data })
       .then(async (response) => {
-        const { displayName, email, token } = response.data;
+        const { displayName, age, email, token } = response.data;
         // Save token on local storage
         await AsyncStorage.setItem('auth_token', token);
+        // Save on context using redux
+        dispatch(login({ displayName, age, email, token }));
         // Redirect to home screen
         navigation.navigate('Home');
-        // TODO: Save 'displayName' and email in context. I don't want to fight with redux at this time
       })
       .catch((error) => {
         if (!error.response) {
