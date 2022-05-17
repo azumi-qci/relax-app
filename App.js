@@ -37,7 +37,7 @@ export default function App() {
           <Stack.Screen
             name='Review'
             component={ReviewScreen}
-            options={{ title: 'Evaluar actividad' }}
+            options={{ title: 'Evaluar actividad', headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
