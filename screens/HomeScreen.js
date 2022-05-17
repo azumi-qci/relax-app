@@ -6,6 +6,7 @@ import {
   View,
   ToastAndroid,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import { Button, Icon, Text } from '@rneui/themed';
 import { useSelector } from 'react-redux';
@@ -25,6 +26,17 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    getActivities();
+  }, []);
+
+  /**
+   * Gets the activities from the database
+   */
+  const getActivities = () => {
+    if (!loading) {
+      setLoading(true);
+    }
+
     api
       .get('/activity', {
         headers: {
@@ -56,21 +68,7 @@ const HomeScreen = () => {
         }
       })
       .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ImageBackground
-          source={bgImage}
-          resizeMode='cover'
-          style={[styles.bgImage, styles.bgImageCenter]}
-        >
-          <ActivityIndicator size='large' color={colors.primary} />
-        </ImageBackground>
-      </View>
-    );
-  }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -87,15 +85,29 @@ const HomeScreen = () => {
             size={30}
           />
           <Text style={styles.headerText}>Inicio</Text>
+          <Pressable
+            onPress={getActivities}
+            style={styles.reloadButtonContainer}
+          >
+            <Icon
+              type='font-awesome'
+              name='rotate-right'
+              color={colors.white}
+            />
+          </Pressable>
         </View>
 
-        {activities.length ? (
+        {activities.length && !loading ? (
           activities.map((item) => (
             <ActivityCard name={item.name} bgURL={item.bgURL} />
           ))
         ) : (
           <Text>No hay actividades</Text>
         )}
+
+        {loading ? (
+          <ActivityIndicator size='large' color={colors.primary} />
+        ) : null}
 
         {/* Help button */}
         <Button
@@ -139,6 +151,9 @@ const styles = StyleSheet.create({
   bgImageCenter: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  reloadButtonContainer: {
+    marginLeft: 'auto',
   },
 });
 
