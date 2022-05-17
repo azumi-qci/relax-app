@@ -17,7 +17,7 @@ const ReviewScreen = () => {
 
   const [scoreIndex, setScoreIndex] = useState(-1);
 
-  const { name } = route.params;
+  const { name, data } = route.params;
 
   const handlePressEvaluation = useCallback(
     (value) => {
@@ -29,7 +29,7 @@ const ReviewScreen = () => {
         .post(
           '/review',
           {
-            activity: name,
+            activity: data,
             score: value + 1,
           },
           {

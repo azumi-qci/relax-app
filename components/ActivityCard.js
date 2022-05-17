@@ -8,13 +8,14 @@ import defaulImage from '../assets/test.jpg';
  * @param {object} props - Component props
  * @param {string} props.name - Name of the activity
  * @param {string} props.bgURL - URI of the background image
+ * @param {object} props.data - Complete data of the activity
  * @returns {JSX.Element}
  */
-const ActivityCard = ({ name, bgURL }) => {
+const ActivityCard = ({ name, bgURL, data }) => {
   const navigation = useNavigation();
 
   const handlePressCard = useCallback(() => {
-    navigation.navigate('Review', { name });
+    navigation.navigate('Review', { data });
   }, []);
 
   return (
