@@ -1,9 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useRef, useState } from 'react';
-import { View, StyleSheet, ToastAndroid } from 'react-native';
-import { Card, Input, Button, Text } from '@rneui/themed';
+import { View, StyleSheet, ToastAndroid, ImageBackground } from 'react-native';
+import { Card, Input, Button, Text, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+
+import bgImage from '../assets/bg.jpg';
+
+import colors from '../colors';
 
 import { login } from '../redux/features/auth.slice';
 
@@ -75,52 +79,68 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Card containerStyle={styles.card}>
-        <Card.Title>Iniciar sesión</Card.Title>
-        <Card.Divider />
-        <Input
-          disabled={sending}
-          onChangeText={(value) => setData({ ...data, email: value })}
-          onSubmitEditing={goToPasswordInput}
-          placeholder='Correo electrónico'
-          returnKeyType='next'
-          value={data.email}
-        />
-        <Input
-          disabled={sending}
-          onChangeText={(value) => setData({ ...data, password: value })}
-          onSubmitEditing={handlePressEnter}
-          placeholder='Contraseña'
-          ref={passwordInputRef}
-          returnKeyType='done'
-          secureTextEntry={true}
-          value={data.password}
-        />
-        <Button
-          title='Entrar'
-          loading={sending}
-          onPress={handlePressEnter}
-          disabled={checkIfReadyToSend()}
-        />
-      </Card>
-      {/* No account container */}
-      <View style={styles.noAccountContainer}>
-        <Text style={styles.noAccountText} onPress={handlePressNoAccount}>
-          Crear cuenta
-        </Text>
-      </View>
+      <ImageBackground
+        source={bgImage}
+        resizeMode='cover'
+        style={styles.bgImage}
+      >
+        <Card containerStyle={styles.card}>
+          <Card.Title>
+            <Icon
+              type='font-awesome-5'
+              name='yin-yang'
+              size={110}
+              color={colors.primary}
+            />
+          </Card.Title>
+          <Input
+            disabled={sending}
+            onChangeText={(value) => setData({ ...data, email: value })}
+            onSubmitEditing={goToPasswordInput}
+            placeholder='Correo electrónico'
+            returnKeyType='next'
+            style={styles.field}
+            value={data.email}
+          />
+          <Input
+            disabled={sending}
+            onChangeText={(value) => setData({ ...data, password: value })}
+            onSubmitEditing={handlePressEnter}
+            placeholder='Contraseña'
+            ref={passwordInputRef}
+            returnKeyType='done'
+            secureTextEntry={true}
+            style={styles.field}
+            value={data.password}
+          />
+          <Button
+            title='Entrar'
+            loading={sending}
+            onPress={handlePressEnter}
+            disabled={checkIfReadyToSend()}
+            buttonStyle={styles.enterButton}
+          />
+        </Card>
+        {/* No account container */}
+        <View style={styles.noAccountContainer}>
+          <Text style={styles.noAccountText} onPress={handlePressNoAccount}>
+            Crear cuenta
+          </Text>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    height: '100%',
+    flex: 1,
   },
   card: {
     marginBottom: 25,
+    borderRadius: 20,
+    borderWidth: 0,
+    elevation: 5,
   },
   noAccountContainer: {
     display: 'flex',
@@ -128,8 +148,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noAccountText: {
+    color: colors.white,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    fontSize: 18,
+  },
+  bgImage: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  field: {
+    backgroundColor: colors.white,
+    paddingHorizontal: 10,
+  },
+  enterButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 10,
   },
 });
 

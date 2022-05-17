@@ -31,7 +31,7 @@ const ActivityCard = ({ name }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
-    height: 170,
+    height: 130,
   },
   innerContainer: {
     display: 'flex',

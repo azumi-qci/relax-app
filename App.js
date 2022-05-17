@@ -21,6 +21,7 @@ export default function App() {
             component={HomeScreen}
             options={{
               title: 'Inicio',
+              headerShown: false,
             }}
           />
           <Stack.Screen
