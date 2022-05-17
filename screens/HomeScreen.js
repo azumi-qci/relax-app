@@ -90,7 +90,9 @@ const HomeScreen = () => {
         </View>
 
         {activities.length ? (
-          activities.map((item) => <ActivityCard name={item.name} />)
+          activities.map((item) => (
+            <ActivityCard name={item.name} bgURL={item.bgURL} />
+          ))
         ) : (
           <Text>No hay actividades</Text>
         )}

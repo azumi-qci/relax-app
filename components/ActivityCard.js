@@ -2,14 +2,15 @@ import { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-import backgroundImage from '../assets/test.jpg';
+import defaulImage from '../assets/test.jpg';
 
 /**
  * @param {object} props - Component props
  * @param {string} props.name - Name of the activity
+ * @param {string} props.bgURL - URI of the background image
  * @returns {JSX.Element}
  */
-const ActivityCard = ({ name }) => {
+const ActivityCard = ({ name, bgURL }) => {
   const navigation = useNavigation();
 
   const handlePressCard = useCallback(() => {
@@ -20,7 +21,10 @@ const ActivityCard = ({ name }) => {
     <Pressable onPress={handlePressCard}>
       <View style={styles.container}>
         <View style={styles.innerContainer}>
-          <Image source={backgroundImage} style={styles.backgroundImage} />
+          <Image
+            source={bgURL ? { uri: bgURL } : defaulImage}
+            style={styles.backgroundImage}
+          />
           <Text style={styles.name}>{name}</Text>
         </View>
       </View>
@@ -48,6 +52,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 8,
     fontSize: 30,
+    textShadowColor: 'black',
+    textShadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    textShadowRadius: 10,
   },
 });
 
